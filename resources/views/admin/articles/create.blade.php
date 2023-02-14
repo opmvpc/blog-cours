@@ -10,6 +10,10 @@
         <input id="title" type="text" name="title">
         <span class="text-red-500">{{ $errors->first('title') }}</span>
 
+        <label for="date">Date</label>
+        <input id="date" type="date" name="published_at">
+        <span class="text-red-500">{{ $errors->first('title') }}</span>
+
         </span>
 
         <label for="body">Texte de l'article</label>

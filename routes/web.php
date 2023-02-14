@@ -21,15 +21,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomepageController::class, 'index']);
 
-Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles', [ArticleController::class, 'index'])->name('front.articles.index');
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('front.articles.show');
 
 
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/articles', AdminArticleController::class);
-})->middleware(['auth', 'verified']);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

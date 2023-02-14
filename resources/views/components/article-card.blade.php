@@ -1,6 +1,7 @@
 <a class="flex flex-col h-full space-y-4 bg-white rounded-md shadow-md p-5 w-full hover:shadow-lg hover:scale-105 transition"
-    href="{{ route('articles.show', $article) }}">
-    <img src="{{ asset('storage/' . $article->img_path) }}" alt="illustration de l'article">
+    href="{{ route('front.articles.show', $article) }}">
+    <img src="{{ asset('storage/' . $article->img_path) }}"
+        alt="illustration de l'article">
     <div class="uppercase font-bold text-gray-800">
         {{ $article->title }}
     </div>

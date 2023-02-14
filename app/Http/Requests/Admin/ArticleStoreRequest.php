@@ -25,6 +25,7 @@ class ArticleStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|unique:articles|max:255',
+            'published_at' => '',
             'body' => 'required|max:10000',
         ];
     }

@@ -38,6 +38,7 @@ class ArticleController extends Controller
      */
     public function store(ArticleStoreRequest $request)
     {
+        dd($request->validated());
         $article = Article::make();
         $article->title = $request->title;
         $article->body = $request->body;
