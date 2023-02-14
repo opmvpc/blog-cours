@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ArticleStoreRequest;
+use App\Http\Requests\Admin\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return "hello";
+        $articles = Article::paginate(12);
+
+        return view('admin.articles.index', compact('articles'));
     }
 
     /**
@@ -38,7 +41,7 @@ class ArticleController extends Controller
      */
     public function store(ArticleStoreRequest $request)
     {
-        dd($request->validated());
+
         $article = Article::make();
         $article->title = $request->title;
         $article->body = $request->body;
@@ -56,7 +59,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('admin.articles.show', compact('article'));
     }
 
     /**
@@ -67,7 +70,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('admin.articles.edit', compact('article'));
     }
 
     /**
@@ -77,9 +80,14 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        // enregistrement des données
+        $article->title = $request->title;
+        $article->body = $request->body;
+        $article->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -90,6 +98,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        return redirect()->back();
     }
 }
