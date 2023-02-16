@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ArticleStoreRequest;
 use App\Http\Requests\Admin\UpdateArticleRequest;
 use App\Models\Article;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -18,9 +17,16 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(12);
+        $articles = Article::orderByDesc('updated_at')
+            ->paginate(10)
+        ;
 
-        return view('admin.articles.index', compact('articles'));
+        return view(
+            'admin.articles.index',
+            [
+                'articles' => $articles,
+            ]
+        );
     }
 
     /**
@@ -36,36 +42,34 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(ArticleStoreRequest $request)
     {
-
         $article = Article::make();
-        $article->title = $request->title;
-        $article->body = $request->body;
+        $article->title = $request->validated()['title'];
+        $article->body = $request->validated()['body'];
+        $article->published_at = $request->validated()['published_at'];
         $article->user_id = Auth::id();
         $article->save();
 
-        return redirect()->back();
+        return redirect()->route('articles.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function show(Article $article)
     {
-        return view('admin.articles.show', compact('article'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function edit(Article $article)
@@ -76,15 +80,15 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Article  $article
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        // enregistrement des données
-        $article->title = $request->title;
-        $article->body = $request->body;
+        $article->title = $request->validated()['title'];
+        $article->body = $request->validated()['body'];
+        $article->published_at = $request->validated()['published_at'];
         $article->save();
 
         return redirect()->back();
@@ -93,13 +97,12 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)
     {
         $article->delete();
 
-        return redirect()->back();
+        return redirect()->route('articles.index');
     }
 }

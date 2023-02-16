@@ -24,7 +24,8 @@ class UpdateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:articles,title,'.$this->route('article')->id,
+            'published_at' => 'nullable|date',
             'body' => 'required|string',
         ];
     }
