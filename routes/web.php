@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,28 +18,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*====================================
+=            Front Office            =
+====================================*/
+
+// Page d'accueil
 Route::get('/', [HomepageController::class, 'index']);
 
+// Liste des articles
 Route::get('/articles', [ArticleController::class, 'index'])->name('front.articles.index');
+// Détail d'un article
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('front.articles.show');
 
+// Page à propos
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
-    Route::resource('/articles', AdminArticleController::class);
-});
+/*====================================
+=            Back Office             =
+====================================*/
 
+// Page d'accueil du back office
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    // Gestion des articles (création, modification, suppression)
+    Route::resource('/articles', AdminArticleController::class);
+});
+
+// Gestion du profil utilisateur
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
-
-
-Route::resource('users', UserController::class);
+// Authentification
+require __DIR__.'/auth.php';

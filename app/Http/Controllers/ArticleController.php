@@ -27,12 +27,4 @@ class ArticleController extends Controller
             'article' => $article,
         ]);
     }
-
-    public function create()
-    {
-    }
-
-    public function store(Request $request)
-    {
-    }
 }
