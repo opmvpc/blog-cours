@@ -48,11 +48,23 @@ class ArticleController extends Controller
      */
     public function store(ArticleStoreRequest $request)
     {
+        // On crée un nouvel article
         $article = Article::make();
+
+        // On ajoute les propriétés de l'article
         $article->title = $request->validated()['title'];
         $article->body = $request->validated()['body'];
         $article->published_at = $request->validated()['published_at'];
         $article->user_id = Auth::id();
+
+
+        // Si il y a une image, on la sauvegarde
+        if ($request->hasFile('img')) {
+            $path = $request->file('img')->store('articles', 'public');
+            $article->img_path = $path;
+        }
+
+        // On sauvegarde l'article en base de données
         $article->save();
 
         return redirect()->route('articles.index');
@@ -86,9 +98,18 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
+        // On modifies les propriétés de l'article
         $article->title = $request->validated()['title'];
         $article->body = $request->validated()['body'];
         $article->published_at = $request->validated()['published_at'];
+
+        // Si il y a une image, on la sauvegarde
+        if ($request->hasFile('img')) {
+            $path = $request->file('img')->store('articles', 'public');
+            $article->img_path = $path;
+        }
+
+        // On sauvegarde les modifications en base de données
         $article->save();
 
         return redirect()->back();

@@ -26,6 +26,7 @@ class UpdateArticleRequest extends FormRequest
         return [
             'title' => 'required|string|max:255|unique:articles,title,'.$this->route('article')->id,
             'published_at' => 'nullable|date',
+            'img' => 'nullable|image|max:2048',
             'body' => 'required|string',
         ];
     }

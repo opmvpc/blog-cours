@@ -1,7 +1,6 @@
 <a class="flex flex-col h-full space-y-4 bg-white rounded-md shadow-md p-5 w-full hover:shadow-lg hover:scale-105 transition"
     href="{{ route('front.articles.show', $article) }}">
-    <img src="{{ asset('storage/' . $article->img_path) }}"
-        alt="illustration de l'article">
+    <img src="{{ asset('storage/' . $article->img_path) }}" alt="illustration de l'article">
     <div class="uppercase font-bold text-gray-800">
         {{ $article->title }}
     </div>
@@ -9,6 +8,6 @@
         {{ Str::limit($article->body, 120) }}
     </div>
     <div class="text-xs text-gray-500">
-        {{ $article->published_at }}
+        {{ $article->published_at->diffForHumans() }}
     </div>
 </a>

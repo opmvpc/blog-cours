@@ -17,9 +17,12 @@
 
                         <div class="flex  items-center justify-center space-x-8">
                             <a href="{{ route('articles.create') }}"
-                                class="text-gray-500 font-bold py-2 px-4 rounded hover:bg-gray-200 transition">Ajouter
+                                class="text-gray-500 font-bold py-2 px-4 rounded hover:bg-gray-200 transition flex items-center">
+                                <x-heroicon-o-plus class="w-4 h-4 mr-2" />
+                                Ajouter
                                 un
-                                article</a>
+                                article
+                            </a>
                         </div>
                     </div>
 
@@ -46,12 +49,18 @@
                                         <td class="border px-4 py-2">
                                             {{ $article->updated_at->diffForHumans() }}</td>
                                         <td class="border px-4 py-2 space-x-4">
-                                            <a href="{{ route('articles.edit', $article->id) }}"
-                                                class="text-blue-400">Edit</a>
+                                            <div class="flex space-x-4">
+                                                <a href="{{ route('articles.edit', $article->id) }}"
+                                                    class="text-blue-400">
+                                                    <x-heroicon-o-pencil class="w-5 h-5" />
+                                                </a>
 
-                                            <button x-data="{ id: {{ $article->id }} }"
-                                                x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-article-deletion');"
-                                                type="submit" class="text-red-400">Delete</button>
+                                                <button x-data="{ id: {{ $article->id }} }"
+                                                    x-on:click.prevent="window.selected = id; $dispatch('open-modal', 'confirm-article-deletion');"
+                                                    type="submit" class="text-red-400">
+                                                    <x-heroicon-o-trash class="w-5 h-5" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -15,7 +15,8 @@
             </div>
 
             <div class="text-gray-500">
-                <form method="POST" action="{{ route('articles.update', $article) }}" class="flex flex-col space-y-4">
+                <form method="POST" action="{{ route('articles.update', $article) }}" class="flex flex-col space-y-4"
+                    enctype="multipart/form-data">
 
                     @csrf
                     @method('PUT')
@@ -35,7 +36,17 @@
                     </div>
 
                     <div>
-                            <x-input-label for="body" :value="__('Texte de l\'article')" />
+                        <x-input-label for="img" :value="__('Image')" />
+                        @if ($article->img_path)
+                            <img src="{{ asset('storage/' . $article->img_path) }}" alt="Image de l'article"
+                                class="aspect-auto h-64 rounded shadow mt-2 mb-4 object-cover object-center">
+                        @endif
+                        <x-text-input id="img" class="block mt-1 w-full" type="file" name="img" />
+                        <x-input-error :messages="$errors->get('img')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="body" :value="__('Texte de l\'article')" />
                         <textarea id="body"
                             class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             name="body" rows="10">{{ old('body', $article) }}</textarea>

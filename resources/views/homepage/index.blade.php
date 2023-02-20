@@ -7,4 +7,10 @@
             </li>
         @endforeach
     </ul>
+
+    <div class="mt-8 flex items-center justify-center">
+        <a href="{{ route('front.articles.index') }}" class="font-bold bg-white text-gray-700 px-4 py-2 rounded shadow">
+            Liste des articles
+        </a>
+    </div>
 </x-guest-layout>
