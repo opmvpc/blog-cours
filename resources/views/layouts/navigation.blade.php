@@ -19,6 +19,12 @@
                     <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">
                         {{ __('Articles') }}
                     </x-nav-link>
+
+                    @can('viewAny', App\Models\User::class)
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                            {{ __('Utilisateurs') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -86,6 +92,12 @@
             <x-responsive-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">
                 {{ __('Articles') }}
             </x-responsive-nav-link>
+
+            @can('viewAny', App\Models\User::class)
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                    {{ __('Utilisateurs') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

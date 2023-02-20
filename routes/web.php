@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProfileController;
@@ -44,7 +45,10 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     // Gestion des articles (création, modification, suppression)
-    Route::resource('/articles', AdminArticleController::class);
+    Route::resource('/articles', AdminArticleController::class)->except(['show']);
+
+    // Gestion des utilisateurs (Détails et changement de rôle)
+    Route::resource('/users', UserController::class)->only(['index', 'edit', 'update']);
 });
 
 // Gestion du profil utilisateur
