@@ -31,6 +31,14 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('front.articl
 // Détail d'un article
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('front.articles.show');
 
+// Gestion des commentaires, uniquement pour les utilisateurs authentifiés
+Route::middleware('auth')->group(function () {
+    // Ajout d'un commentaire
+    Route::post('/articles/{article}/comments', [ArticleController::class, 'addComment'])->name('front.articles.comments.add');
+    // Suppression d'un commentaire
+    Route::delete('/articles/{article}/comments/{comment}', [ArticleController::class, 'deleteComment'])->name('front.articles.comments.delete');
+});
+
 // Page à propos
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 

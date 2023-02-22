@@ -9,8 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet"
-        href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -20,22 +19,21 @@
     <div class="min-h-screen flex flex-col pt-6 bg-gray-100 dark:bg-gray-900">
         <div class="container mx-auto flex flex-col space-y-10 px-3">
             <header>
-                <nav
-                    class="flex justify-between items-center py-2 bg-white shadow-md px-2 rounded-md">
+                <nav class="flex justify-between items-center py-2 bg-white shadow-md px-4 rounded-md">
                     <div>
                         <a href="{{ url('/') }}"
-                            class="group font-bold text-3xl flex items-center space-x-4 hover:text-emerald-600 transition ">
+                            class="group font-bold text-3xl flex items-center space-x-2 hover:text-emerald-600 transition ">
                             <x-application-logo
-                                class="w-10 h-10 fill-current text-gray-500 group-hover:text-emerald-500 transition" />
+                                class="w-8 h-8 fill-current text-gray-500 group-hover:text-emerald-500 transition" />
                             <span>Mon blog</span>
                         </a>
                     </div>
-                    <div class="flex items-center space-x-4 justify-end">
+                    <div class="flex items-center space-x-8 justify-end">
                         <a class="font-bold hover:text-emerald-600 transition"
                             href="{{ route('front.articles.index') }}">Articles</a>
 
-                        <a class="font-bold hover:text-emerald-600 transition"
-                            href="{{ route('about.index') }}">À propos</a>
+                        <a class="font-bold hover:text-emerald-600 transition" href="{{ route('about.index') }}">À
+                            propos</a>
                     </div>
                 </nav>
             </header>
