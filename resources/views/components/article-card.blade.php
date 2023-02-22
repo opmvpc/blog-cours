@@ -7,7 +7,15 @@
     <div class="flex-grow text-gray-700 text-sm text-justify">
         {{ Str::limit($article->body, 120) }}
     </div>
-    <div class="text-xs text-gray-500">
-        {{ $article->published_at->diffForHumans() }}
+    <div class="flex justify-between items-center">
+        <div class="text-sm text-gray-500">
+            {{ $article->published_at->diffForHumans() }}
+        </div>
+        <div class="flex items-center space-x-2">
+            <x-heroicon-o-chat-bubble-bottom-center-text class="h-5 w-5 text-gray-500" />
+            <div class="text-sm text-gray-500">
+                {{ $article->comments_count }}
+            </div>
+        </div>
     </div>
 </a>

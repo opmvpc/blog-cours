@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,35 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    /**
+     * Display the user's profile.
+     */
+    public function show(User $user): View
+    {
+        // Les articles publiés par l'utilisateur
+        $articles = $user
+            ->articles()
+            ->where('published_at', '<', now())
+            ->withCount('comments')
+            ->orderByDesc('published_at')
+            ->get()
+        ;
+
+        // Les commentaires de l'utilisateur triés par date de création
+        $comments = $user
+            ->comments()
+            ->orderByDesc('created_at')
+            ->get()
+        ;
+
+        // On renvoie la vue avec les données
+        return view('profile.show', [
+            'user' => $user,
+            'articles' => $articles,
+            'comments' => $comments,
+        ]);
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -48,7 +78,7 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             $user = $request->user();
             $path = $request->file('avatar')->store('avatars', 'public');
-                $user->avatar_path = $path;
+            $user->avatar_path = $path;
             $user->save();
         }
 

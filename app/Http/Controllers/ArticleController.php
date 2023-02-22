@@ -16,6 +16,7 @@ class ArticleController extends Controller
             ->orWhereHas('user', function ($query) use ($request) {
                 $query->where('name', 'LIKE', '%'.$request->query('search').'%');
             })
+            ->withCount('comments')
             ->orderByDesc('published_at')
             ->paginate(12)
         ;
